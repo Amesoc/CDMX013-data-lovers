@@ -58,6 +58,23 @@ body {
 
 }
 
+.orden-alfabetico{
+    position: absolute;
+    transform: translate(0%,30%);
+}
+#btn-order1, 
+#btn-order2 {
+    text-decoration: none;
+    background-color: rgb(5, 40, 72);
+    font-size: 20px;
+    padding:10px 24px ;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: aliceblue;
+    display: inline-block;
+    margin: 5px;
+    box-shadow: 2px 2px 2px 5px rgba(0, 0, 0, .5);
+    border-radius: 100%;
+}
 .main-menu {
     max-width: 900px;
     margin: auto;
@@ -349,11 +366,7 @@ h3 {
     letter-spacing: 2px;
 }
 
-.caracter-card h4,
-.spell-card h4, 
-.books-card h4,
-.fun-Facts h4,
-.potions-card h4{
+h4{
     color: rgb(10, 10, 10);
     font-family: 'Jolly Lodger', cursive;
     text-align: center;

@@ -1,42 +1,86 @@
-import filterAll from './data.js';
-import dataPotter from "./data/harrypotter/harry.json" assert { type: "json" };
+import { filterAll, sortArray } from './data.js';
+import dataPotter from "./data/harrypotter/data.js";
+//console.log(sortArray)
+let visibleArray = [];
 const filterBySpells = dataPotter.spells;
+let visibleSeccion = "";
+
+
 const main = document.querySelector('main');
- function showCaracters() {
-    main.innerHTML = ""
-    const characters = dataPotter.characters
-    characters.forEach(c => {
-     //   console.log(c.name, c.species)
+
+function createCharacters(characters, cardclass) {
+    characters.forEach(g => {
+        //   console.log(c.name, c.species)
         const card = document.createElement('div');
-        card.className = "caracter-card";
+        card.className = cardclass;
         const name = document.createElement('h3');
-        name.textContent = c.name;
+        name.textContent = g.name;
+
+        const house = document.createElement('h4');
+        house.textContent = g.house;
+
         const species = document.createElement('h4');
-        species.textContent = c.species;
+        species.textContent = g.species;
+
+        const gender = document.createElement('h4');
+        gender.textContent = g.gender;
         main.append(card);
-        card.append(name, species);
-        //console.log(name);
-        });
-    }
-    //crear en el dom el dropdown con las opciones de filtrado
-function showSpells() {
-    //crear funcion con evento onclick para obtener el valor de filtrado
-    //llamamos a la funcion filter de data.js y le enviamos como argumento el valor de las opciones en dopdrown, y la data de la cual se va a filtrar ese valor
-    main.innerHTML = ""
-    const spells = dataPotter.spells
+        card.append(name, house, species, gender);
+
+    });
+
+}
+function createSpells(spells) {
     spells.forEach(c => {
-        //console.log(c.name, c.spell_type, c.pronunciation)
         const card = document.createElement('div');
-        card.className = "spell-card";
+        card.className = "spellsUno-cards";
         const name = document.createElement('h3');
         name.textContent = c.name;
-        const spellType = document.createElement('h4');
-        spellType.textContent = c.spell_type;
         const pronunciation = document.createElement('h4');
         pronunciation.textContent = c.pronunciation;
+        const spells_type = document.createElement('h4');
+        spells_type.textContent = c.spell_type;
+        card.append(name, pronunciation, spells_type);
         main.append(card);
-        card.append(name, spellType, pronunciation);
-    });
+    })
+}
+
+/*function createPotions(potions) {
+    console.log(createPotions)
+    potions.forEach(p => {
+        const card = document.createElement('div');
+        card.className = "potions-card";
+        const name = document.createElement('h3');
+        name.textContent = p.name;
+        const description = document.createElement('h4');
+        description.textContent = p.description;
+        card.append(name, description);
+        main.append(card);
+    })
+}*/
+function showCaracters() {
+    document.getElementById("btn-order1").style.display="inline-block";
+    main.innerHTML = ""
+    const characters = dataPotter.characters
+    visibleArray = characters;
+    visibleSeccion = "characters";
+    createCharacters(characters, "caracter-card")
+}
+//crear en el dom el dropdown con las opciones de filtrado
+function showSpells() {
+    main.innerHTML = ""
+    const spells = dataPotter.spells
+    visibleArray = spells;
+    visibleSeccion = "spells";
+    createSpells(spells);
+}
+function showPotions() {
+    main.innerHTML = ""
+    const potions = dataPotter.potions
+    visibleArray = potions;
+    visibleSeccion = "potions";
+    createSpells(potions);
+
 }
 function showfunFacts() {
     main.innerHTML = ""
@@ -52,22 +96,10 @@ function showfunFacts() {
         card.append(name, content);
     });
 }
-function showPotions() {
-    main.innerHTML = ""
-    const potions = dataPotter.potions
-    potions.forEach(c => {
-        //console.log(c.name, c.description)
-        const card = document.createElement('div');
-        card.className = "potions-card";
-        const name = document.createElement('h3');
-        name.textContent = c.name;
-        const description = document.createElement('h4');
-        description.textContent = c.description;
-        main.append(card);
-        card.append(name, description);
-    });
-}
+
 function showBooks() {
+    //queremos obtener elenemto por id
+    document.getElementById("btn-order1").style.display="none";
     main.innerHTML = ""
     const books = dataPotter.books
     books.forEach(c => {
@@ -86,263 +118,143 @@ function showBooks() {
     });
 }
 //funciones sub menu
-function showGryffindor(){
-    main.innerHTML="";
+function showGryffindor() {
+    main.innerHTML = "";
     const gryffindor = filterAll.houses(dataPotter.characters, "Gryffindor");
-    gryffindor.forEach (g => {
-        const card = document.createElement('div');
-        card.className = "gryffindor-card";
-        
-        const name = document.createElement('h3');
-        name.textContent = g.name;
-       
-        const house = document.createElement('h4');
-        house.textContent = g.house;
-
-        const species = document.createElement('h4');
-        species.textContent = g.species;
-        
-        const gender = document.createElement('h4');
-        gender.textContent = g.gender;
-        
-       card.append(name, house, species, gender);
-         main.append(card);
-    })
+    visibleArray = gryffindor;
+    visibleSeccion = "characters"
+    createCharacters(gryffindor, "gryffindor-card");
 }
 
-function showHufflepuff(){
-    main.innerHTML="";
+
+function showHufflepuff() {
+    main.innerHTML = "";
     const hufflepuff = filterAll.houses(dataPotter.characters, "Hufflepuff");
-    hufflepuff.forEach (h => {
-        const card = document.createElement('div');
-        card.className = "hufflepuff-card";
-        
-        const name = document.createElement('h3');
-        name.textContent = h.name;
-       
-        const house = document.createElement('h4');
-        house.textContent = h.house;
-
-        const species = document.createElement('h4');
-        species.textContent = h.species;
-        
-        const gender = document.createElement('h4');
-        gender.textContent = h.gender;
-        
-       card.append(name, house, species, gender);
-         main.append(card);
-    })
+    visibleArray = hufflepuff;
+    visibleSeccion = "characters"
+    createCharacters(hufflepuff, "hufflepuff-card");
 }
 
-function showRavenclaw(){
-    main.innerHTML="";
+function showRavenclaw() {
+    main.innerHTML = "";
     const ravenclaw = filterAll.houses(dataPotter.characters, "Ravenclaw");
-    ravenclaw.forEach (r => {
-        const card = document.createElement('div');
-        card.className = "ravenclaw-card";
-        
-        const name = document.createElement('h3');
-        name.textContent = r.name;
-       
-        const house = document.createElement('h4');
-        house.textContent = r.house;
-
-        const species = document.createElement('h4');
-        species.textContent = r.species;
-        
-        const gender = document.createElement('h4');
-        gender.textContent = r.gender;
-        
-       card.append(name, house, species, gender);
-         main.append(card);
-    })
+    visibleArray = ravenclaw;
+    visibleSeccion = "characters"
+    createCharacters(ravenclaw, "ravenclaw-card");
 }
 
-function showSlytherin(){
-    main.innerHTML="";
+function showSlytherin() {
+    main.innerHTML = "";
     const slytherin = filterAll.houses(dataPotter.characters, "Slytherin");
-    slytherin.forEach (s => {
-        const card = document.createElement('div');
-        card.className = "slytherin-card";
-        
-        const name = document.createElement('h3');
-        name.textContent = s.name;
-       
-        const house = document.createElement('h4');
-        house.textContent = s.house;
-
-        const species = document.createElement('h4');
-        species.textContent = s.species;
-        
-        const gender = document.createElement('h4');
-        gender.textContent = s.gender;
-        
-       card.append(name, house, species, gender);
-         main.append(card);
-    })
+    visibleArray = slytherin;
+    visibleSeccion = "characters"
+    createCharacters(slytherin, "slytherin-card");
 }
 
 //functions Spells filter
-function showCharm(){
-    main.innerHTML="";
+function showCharm() {
+    main.innerHTML = "";
     const charm = filterAll.spells(filterBySpells, "Charm");
-    charm.forEach(c => {
-        const card = document.createElement('div');
-        card.className = "spellsUno-cards";
-        const name = document.createElement('h3');
-        name.textContent = c.name;
-        const pronunciation = document.createElement('h4');
-        pronunciation.textContent = c.pronunciation;
-        const spells_type = document.createElement('h4');
-        spells_type.textContent = c.spell_type;
-        card.append(name,pronunciation, spells_type);
-        main.append(card);
-})
+    visibleArray = charm;
+    visibleSeccion = "spells";
+    createSpells(charm);
 }
-function showConjuration(){
-    main.innerHTML="";
+function showConjuration() {
+    main.innerHTML = "";
     const charm = filterAll.spells(filterBySpells, "Conjuration");
-    charm.forEach(c => {
-        const card = document.createElement('div');
-        card.className = "spellsUno-cards";
-        const name = document.createElement('h3');
-        name.textContent = c.name;
-        const pronunciation = document.createElement('h4');
-        pronunciation.textContent = c.pronunciation;
-        const spells_type = document.createElement('h4');
-        spells_type.textContent = c.spell_type;
-        card.append(name,pronunciation,spells_type);
-        main.append(card);
-})
+    visibleArray = charm;
+    visibleSeccion = "spells";
+    createSpells(charm);
 }
-function showHex(){
-    main.innerHTML="";
+function showHex() {
+    main.innerHTML = "";
     const charm = filterAll.spells(filterBySpells, "Hex");
-    charm.forEach(c => {
-        const card = document.createElement('div');
-        card.className = "spellsUno-cards";
-        const name = document.createElement('h3');
-        name.textContent = c.name;
-        const pronunciation = document.createElement('h4');
-        pronunciation.textContent = c.pronunciation;
-        const spells_type = document.createElement('h4');
-        spells_type.textContent = c.spell_type;
-        card.append(name,pronunciation,spells_type );
-        main.append(card);
-})
+    visibleArray = charm;
+    visibleSeccion = "spells";
+    createSpells(charm);
 }
-function showJinx(){
-    main.innerHTML="";
+function showJinx() {
+    main.innerHTML = "";
     const charm = filterAll.spells(filterBySpells, "Jinx");
-    charm.forEach(c => {
-        const card = document.createElement('div');
-        card.className = "spellsUno-cards";
-        const name = document.createElement('h3');
-        name.textContent = c.name;
-        const pronunciation = document.createElement('h4');
-        pronunciation.textContent = c.pronunciation;
-        const spells_type = document.createElement('h4');
-        spells_type.textContent = c.spell_type;
-        card.append(name, pronunciation, spells_type);
-        main.append(card);
-})
+    visibleArray = charm;
+    visibleSeccion = "spells";
+    createSpells(charm);
 }
-function showCurse(){
-    main.innerHTML="";
+function showCurse() {
+    main.innerHTML = "";
     const charm = filterAll.spells(filterBySpells, "Curse");
-    charm.forEach(c => {
-        const card = document.createElement('div');
-        card.className = "spellsUno-cards";
-        const name = document.createElement('h3');
-        name.textContent = c.name;
-        const pronunciation = document.createElement('h4');
-        pronunciation.textContent = c.pronunciation;
-        const spells_type = document.createElement('h4');
-        spells_type.textContent = c.spell_type;
-        card.append(name, pronunciation, spells_type);
-        main.append(card);
-})
+    visibleArray = charm;
+    visibleSeccion = "spells";
+    createSpells(charm);
 }
-function showTransfiguration(){
-    main.innerHTML="";
+function showTransfiguration() {
+    main.innerHTML = "";
     const charm = filterAll.spells(filterBySpells, "Transfiguration");
-    charm.forEach(c => {
-        const card = document.createElement('div');
-        card.className = "spellsUno-cards";
-        const name = document.createElement('h3');
-        name.textContent = c.name;
-        const pronunciation = document.createElement('h4');
-        pronunciation.textContent = c.pronunciation;
-        const spells_type = document.createElement('h4');
-        spells_type.textContent = c.spell_type;
-        card.append(name, pronunciation, spells_type);
-        main.append(card);
-})
+    visibleArray = charm;
+    visibleSeccion = "spells";
+    createSpells(charm);
 }
-function showHealingSpell(){
-    main.innerHTML="";
+function showHealingSpell() {
+    main.innerHTML = "";
     const charm = filterAll.spells(filterBySpells, "Healing Spell");
-    charm.forEach(c => {
-        const card = document.createElement('div');
-        card.className = "spellsUno-cards";
-        const name = document.createElement('h3');
-        name.textContent = c.name;
-        const pronunciation = document.createElement('h4');
-        pronunciation.textContent = c.pronunciation;
-        const spells_type = document.createElement('h4');
-        spells_type.textContent = c.spell_type;
-        card.append(name, pronunciation, spells_type);
-        main.append(card);
-})
+    visibleArray = charm;
+    visibleSeccion = "spells";
+    createSpells(charm);
 }
-function showVanishment(){
-    main.innerHTML="";
+function showVanishment() {
+    main.innerHTML = "";
     const charm = filterAll.spells(filterBySpells, "Vanishment");
-    charm.forEach(c => {
-        const card = document.createElement('div');
-        card.className = "spellsUno-cards";
-        const name = document.createElement('h3');
-        name.textContent = c.name;
-        const pronunciation = document.createElement('h4');
-        pronunciation.textContent = c.pronunciation;
-        const spells_type = document.createElement('h4');
-        spells_type.textContent = c.spell_type;
-        card.append(name, pronunciation, spells_type);
-        main.append(card);
-})
+    visibleArray = charm;
+    visibleSeccion = "spells";
+    createSpells(charm);
 }
-function showTransportation(){
-    main.innerHTML="";
+function showTransportation() {
+    main.innerHTML = "";
     const charm = filterAll.spells(filterBySpells, "Transportation");
-    charm.forEach(c => {
-        const card = document.createElement('div');
-        card.className = "spellsUno-cards";
-        const name = document.createElement('h3');
-        name.textContent = c.name;
-        const pronunciation = document.createElement('h4');
-        pronunciation.textContent = c.pronunciation;
-        const spells_type = document.createElement('h4');
-        spells_type.textContent = c.spell_type;
-        card.append(name, pronunciation, spells_type);
-        main.append(card);
-})
+    visibleArray = charm;
+    visibleSeccion = "spells";
+    createSpells(charm);
 }
-function showDarkArts(){
-    main.innerHTML="";
+function showDarkArts() {
+    main.innerHTML = "";
     const charm = filterAll.spells(filterBySpells, "Dark Arts");
-    charm.forEach(c => {
-        const card = document.createElement('div');
-        card.className = "spellsUno-cards";
-        const name = document.createElement('h3');
-        name.textContent = c.name;
-        const pronunciation = document.createElement('h4');
-        pronunciation.textContent = c.pronunciation;
-        const spells_type = document.createElement('h4');
-        spells_type.textContent = c.spell_type;
-        card.append(name, pronunciation, spells_type);
-        main.append(card);
-})
+    visibleArray = charm;
+    visibleSeccion = "spells";
+    createSpells(charm);
 }
+// ordenado ascendente
+function showAscendente() {
+    main.innerHTML = "";
+    //console.log(visibleSeccion)
+    const ascendente = sortArray("ascendente", [...visibleArray])
+    if (visibleSeccion == "characters") {
+        createCharacters(ascendente, "caracter-card")
+
+    } else if (visibleSeccion == "spells") {
+        createSpells(ascendente, "caracter-card")
+    } 
+    
+    
+}
+
+
+function showDescendente() {
+    main.innerHTML = "";
+    //console.log(visibleSeccion)
+    const descendiente = sortArray("descendente", [...visibleArray])
+    if (visibleSeccion == "characters") {
+        createCharacters(descendiente, "caracter-card")
+
+    } else if (visibleSeccion == "spells") {
+        createSpells(descendiente)
+    }
+
+    //console.log(descendiente)
+
+}
+
+
+//console.log (sortArray ("ascendente",dataPotter.characters));
 //Principals
 document.getElementById("characters").addEventListener("click", showCaracters);
 document.getElementById("all").addEventListener("click", showSpells);
@@ -367,11 +279,8 @@ document.getElementById("healingSpell").addEventListener("click", showHealingSpe
 document.getElementById("vanishment").addEventListener("click", showVanishment);
 document.getElementById("transportation").addEventListener("click", showTransportation);
 document.getElementById("darkArts").addEventListener("click", showDarkArts);
-//console.log( example, data);
 
-document.getElementById("characters").addEventListener("click", showCaracters);
-document.getElementById("spells").addEventListener("click", showSpells);
-document.getElementById("potions").addEventListener("click", showPotions);
-document.getElementById("books").addEventListener("click", showBooks);
-document.getElementById("funFacts").addEventListener("click", showfunFacts);
 
+//botones ordenado alfabeticamente
+document.getElementById("btn-order2").addEventListener("click", showDescendente);
+document.getElementById("btn-order1").addEventListener("click", showAscendente);

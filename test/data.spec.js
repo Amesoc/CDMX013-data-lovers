@@ -1,23 +1,26 @@
-import filterAll from '../src/data.js';
+import dataPotter from "../src/data/harrypotter/harry.json";
+import {sortArray} from "../src/data.js";
+describe('dataPotter', () => {
+  it('Should be an object', () => {
+    expect(typeof dataPotter).toBe('object');
 
-
-describe('filterAll', () => {
-  it('Should be a object', () => {
-    expect(typeof houses).toBe('object');
+  });
+  it('debe tener la propiedad characters', () => {
+    expect( Object.prototype.hasOwnProperty.call  (dataPotter,"characters")).toBe(true);
   });
 
-  it('returns `example`', () => {
-    expect(example()).toBe('example');
+  it('probar si es characters es un arreglo', () => {
+    expect( Array.isArray (dataPotter.characters)).toBe(true);
   });
 });
 
-
-describe('anotherExample', () => {
+  
+describe('sortArray', () => {
   it('is a function', () => {
-    expect(typeof anotherExample).toBe('function');
+    expect(typeof sortArray).toBe('function');
   });
 
-  it('returns `anotherExample`', () => {
-    expect(anotherExample()).toBe('OMG');
+  it("returns arreglo vacio cuando se le llama con arreglo vacio", () => {
+    expect(sortArray("ascendente", [])).toEqual([]);
   });
 });
