@@ -52,3 +52,30 @@ describe('filterAll', () => {
     expect(filterAll.spells(arraySpells,"Curse")).toEqual(resultSpells);
   });
 });
+
+describe('filterAll', () => {
+  it('is a function', () => {
+    expect(typeof filterAll.houses).toBe('function');
+  });
+  it('is a function', () => {
+    expect(typeof filterAll.spells).toBe('function');
+  });
+  it('debe retornar filtrado de chacarters gryffindor', () => {
+    const arrayCasas= [{house:"Hufflepuff"},{house:"Gryffindor"},{house:"Slytherin"},{house:"Ravenclaw"}]
+    const resultadosCasas = [{house:"Gryffindor"}]
+    expect( filterAll.houses(arrayCasas,"Gryffindor")).toEqual(resultadosCasas);
+  });
+  it('debe retornar filtrado de chacarters Slytherin', () => {
+    const arrayCasas= [{house:"Hufflepuff"},{house:"Hufflepuff"},{house:"Gryffindor"},{house:"Slytherin"},{house:"Ravenclaw"}]
+    const resultadosCasas = [{house:"Slytherin"}]
+    expect( filterAll.houses(arrayCasas,"Slytherin")).toEqual(resultadosCasas);
+  });
+  it('debe retornar filtrado de Spells Hex', () => {
+    const arrayCasas= [{house:"Hufflepuff"},{house:"Hufflepuff"},{house:"Gryffindor"},{house:"Slytherin"},{house:"Ravenclaw"}]
+    const resultadosCasas = [{house:"Slytherin"}]
+    expect( filterAll.houses(arrayCasas,"Slytherin")).toEqual(resultadosCasas);
+  });
+});
+
+
+
