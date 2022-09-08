@@ -1,10 +1,9 @@
-import { filterAll, sortArray } from './data.js';
+import {filterAll, sortArray} from './data.js';
 import dataPotter from "./data/harrypotter/data.js";
 //console.log(sortArray)
 let visibleArray = [];
 const filterBySpells = dataPotter.spells;
 let visibleSeccion = "";
-
 
 const main = document.querySelector('main');
 
@@ -15,13 +14,10 @@ function createCharacters(characters, cardclass) {
         card.className = cardclass;
         const name = document.createElement('h3');
         name.textContent = g.name;
-
         const house = document.createElement('h4');
         house.textContent = g.house;
-
         const species = document.createElement('h4');
         species.textContent = g.species;
-
         const gender = document.createElement('h4');
         gender.textContent = g.gender;
         main.append(card);
@@ -45,7 +41,7 @@ function createSpells(spells) {
     })
 }
 
-/*function createPotions(potions) {
+function createPotions(potions) {
     console.log(createPotions)
     potions.forEach(p => {
         const card = document.createElement('div');
@@ -57,9 +53,10 @@ function createSpells(spells) {
         card.append(name, description);
         main.append(card);
     })
-}*/
+}
 function showCaracters() {
     document.getElementById("btn-order1").style.display="inline-block";
+    document.getElementById("btn-order2").style.display="inline-block";
     main.innerHTML = ""
     const characters = dataPotter.characters
     visibleArray = characters;
@@ -68,6 +65,8 @@ function showCaracters() {
 }
 //crear en el dom el dropdown con las opciones de filtrado
 function showSpells() {
+    document.getElementById("btn-order1").style.display="inline-block";
+    document.getElementById("btn-order2").style.display="inline-block";
     main.innerHTML = ""
     const spells = dataPotter.spells
     visibleArray = spells;
@@ -75,14 +74,18 @@ function showSpells() {
     createSpells(spells);
 }
 function showPotions() {
+    document.getElementById("btn-order1").style.display="inline-block";
+    document.getElementById("btn-order2").style.display="inline-block";
     main.innerHTML = ""
     const potions = dataPotter.potions
     visibleArray = potions;
     visibleSeccion = "potions";
-    createSpells(potions);
+    createPotions(potions, "potions-card");
 
 }
 function showfunFacts() {
+    document.getElementById("btn-order1").style.display="none";
+    document.getElementById("btn-order2").style.display="none";
     main.innerHTML = ""
     const funFacts = dataPotter.funFacts
     funFacts.forEach(c => {
@@ -96,10 +99,10 @@ function showfunFacts() {
         card.append(name, content);
     });
 }
-
 function showBooks() {
     //queremos obtener elenemto por id
     document.getElementById("btn-order1").style.display="none";
+    document.getElementById("btn-order2").style.display="none";
     main.innerHTML = ""
     const books = dataPotter.books
     books.forEach(c => {
@@ -119,38 +122,41 @@ function showBooks() {
 }
 //funciones sub menu
 function showGryffindor() {
+    document.getElementById("btn-order1").style.display="inline-block";
+    document.getElementById("btn-order2").style.display="inline-block";
     main.innerHTML = "";
     const gryffindor = filterAll.houses(dataPotter.characters, "Gryffindor");
     visibleArray = gryffindor;
     visibleSeccion = "characters"
     createCharacters(gryffindor, "gryffindor-card");
 }
-
-
 function showHufflepuff() {
+    document.getElementById("btn-order1").style.display="inline-block";
+    document.getElementById("btn-order2").style.display="inline-block";
     main.innerHTML = "";
     const hufflepuff = filterAll.houses(dataPotter.characters, "Hufflepuff");
     visibleArray = hufflepuff;
     visibleSeccion = "characters"
     createCharacters(hufflepuff, "hufflepuff-card");
 }
-
 function showRavenclaw() {
+    document.getElementById("btn-order1").style.display="inline-block";
+    document.getElementById("btn-order2").style.display="inline-block";
     main.innerHTML = "";
     const ravenclaw = filterAll.houses(dataPotter.characters, "Ravenclaw");
     visibleArray = ravenclaw;
     visibleSeccion = "characters"
     createCharacters(ravenclaw, "ravenclaw-card");
 }
-
 function showSlytherin() {
+    document.getElementById("btn-order1").style.display="inline-block";
+    document.getElementById("btn-order2").style.display="inline-block";
     main.innerHTML = "";
     const slytherin = filterAll.houses(dataPotter.characters, "Slytherin");
     visibleArray = slytherin;
     visibleSeccion = "characters"
     createCharacters(slytherin, "slytherin-card");
 }
-
 //functions Spells filter
 function showCharm() {
     main.innerHTML = "";
@@ -229,30 +235,29 @@ function showAscendente() {
     const ascendente = sortArray("ascendente", [...visibleArray])
     if (visibleSeccion == "characters") {
         createCharacters(ascendente, "caracter-card")
-
     } else if (visibleSeccion == "spells") {
         createSpells(ascendente, "caracter-card")
+    } else if (visibleSeccion == "potions") {
+        createPotions(ascendente, "caracter-card")
     } 
-    
-    
 }
-
 
 function showDescendente() {
     main.innerHTML = "";
     //console.log(visibleSeccion)
-    const descendiente = sortArray("descendente", [...visibleArray])
+    const descendente = sortArray("descendente", [...visibleArray])
     if (visibleSeccion == "characters") {
-        createCharacters(descendiente, "caracter-card")
-
+        createCharacters(descendente, "caracter-card")
     } else if (visibleSeccion == "spells") {
-        createSpells(descendiente)
+        createSpells(descendente, "caracter-card")
+    }else if (visibleSeccion == "potions") {
+        createPotions(descendente, "caracter-card")
     }
 
-    //console.log(descendiente)
+
+    //console.log(descendente)
 
 }
-
 
 //console.log (sortArray ("ascendente",dataPotter.characters));
 //Principals
