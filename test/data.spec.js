@@ -1,4 +1,4 @@
-import {sortArray,filterAll} from "../src/data.js";
+import {sortArray, filterAll} from "../src/data.js";
 
 describe('sortArray', () => {
   it('Is a function', () => {
