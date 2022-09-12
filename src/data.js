@@ -1,5 +1,3 @@
-//import harryPotter from "./data/harrypotter/data.js"
-
 const filterAll = {
   houses: function (characters, house) {
     const filterCharacters = characters.filter((character) => {
@@ -15,8 +13,6 @@ const filterAll = {
   }
 };
 //console.log(filterAll);
-
-
 function sortArray(order, hparray) {
   // console.log(hparray)
   if (order === "ascendente") {
@@ -24,34 +20,29 @@ function sortArray(order, hparray) {
       if (a.name < b.name) {
         return -1
       }
-
       if (a.name > b.name) {
         return 1
       }
-
       return 0
-
     })
-
   }
-  else { hparray.sort((a, b) => {
-    if (a.name < b.name) {
-      return 1
-    }
+  else {
+    hparray.sort((a, b) => {
+      if (a.name < b.name) {
+        return 1
+      }
 
-    if (a.name > b.name) {
-      return -1
-    }
-
-    return 0
-
-  })
-
+      if (a.name > b.name) {
+        return -1
+      }
+      return 0
+    })
+   
   }
   return (hparray);
+
+
 }
 
-
-
-export { filterAll, sortArray };
+export {filterAll, sortArray };
 
